@@ -2,6 +2,8 @@
 
 Welcome to the **Muse** Banking Application project! This application is designed to guide users through their financial journey with inspiration, wisdom, and harmony. Our goal is to provide a seamless and insightful banking experience that helps users manage their finances efficiently and effectively.
 
+> This project under development. Only login and register pages are ready. I will continue to develop the project.
+
 ## Table of Contents
 
 - [Muse Frontend](#muse-frontend)

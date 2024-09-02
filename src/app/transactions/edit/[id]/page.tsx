@@ -1,19 +1,18 @@
 "use client";
 
 import { Box, TextField } from "@mui/material";
-import { Create } from "@refinedev/mui";
+import { Edit } from "@refinedev/mui";
 import { useForm } from "@refinedev/react-hook-form";
 
-export default function CategoryCreate() {
+export default function TransactionEdit() {
   const {
     saveButtonProps,
-    refineCore: { formLoading },
     register,
     formState: { errors },
   } = useForm({});
 
   return (
-    <Create isLoading={formLoading} saveButtonProps={saveButtonProps}>
+    <Edit saveButtonProps={saveButtonProps}>
       <Box
         component="form"
         sx={{ display: "flex", flexDirection: "column" }}
@@ -33,6 +32,6 @@ export default function CategoryCreate() {
           name="title"
         />
       </Box>
-    </Create>
+    </Edit>
   );
 }

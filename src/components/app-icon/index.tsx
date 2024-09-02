@@ -13,9 +13,9 @@ export const AppIcon: React.FC = () => {
     >
       <g fill="currentColor">
         <path
-          fill-rule="evenodd"
+          fillRule="evenodd"
           d="M7.289.18a1.5 1.5 0 0 1 1.422 0l6.5 3.5A1.5 1.5 0 0 1 16 5v2a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 7V5a1.5 1.5 0 0 1 .789-1.32zM8 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"
-          clip-rule="evenodd"
+          clipRule="evenodd"
         />
         <path d="M7 10.5a1 1 0 1 1 2 0V14h2v-3.5a1 1 0 1 1 2 0V14h2a1 1 0 1 1 0 2H1a1 1 0 1 1 0-2h2v-3.5a1 1 0 1 1 2 0V14h2z" />
       </g>

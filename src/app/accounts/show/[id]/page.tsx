@@ -9,16 +9,16 @@ import {
   TextFieldComponent as TextField,
 } from "@refinedev/mui";
 
-export default function BlogPostShow() {
+export default function AccountShow() {
   const { queryResult } = useShow({});
 
   const { data, isLoading } = queryResult;
 
   const record = data?.data;
 
-  const { data: categoryData, isLoading: categoryIsLoading } = useOne({
-    resource: "categories",
-    id: record?.category?.id || "",
+  const { data: accountData, isLoading: accountIsLoading } = useOne({
+    resource: "accounts",
+    id: record?.id || "",
     queryOptions: {
       enabled: !!record,
     },
@@ -33,23 +33,18 @@ export default function BlogPostShow() {
         <TextField value={record?.id} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Title"}
+          {"Account Name"}
         </Typography>
-        <TextField value={record?.title} />
+        <TextField value={record?.accountName} />
 
         <Typography variant="body1" fontWeight="bold">
-          {"Content"}
+          {"Account Number"}
         </Typography>
-        <MarkdownField value={record?.content} />
-
+        <MarkdownField value={record?.accountNumber} />
         <Typography variant="body1" fontWeight="bold">
-          {"Category"}
+          {"Updated at"}
         </Typography>
-        {categoryIsLoading ? <>Loading...</> : <>{categoryData?.data?.title}</>}
-        <Typography variant="body1" fontWeight="bold">
-          {"Status"}
-        </Typography>
-        <TextField value={record?.status} />
+        <TextField value={record?.updatedAt} />
 
         <Typography variant="body1" fontWeight="bold">
           {"CreatedAt"}

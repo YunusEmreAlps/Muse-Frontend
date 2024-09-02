@@ -2,69 +2,82 @@
 
 import type { AuthProvider } from "@refinedev/core";
 import Cookies from "js-cookie";
+import axios from "axios";
+
+const API_URL = process.env.API_URL || "http://localhost:8080/api";
 
 export const authProvider: AuthProvider = {
   login: async ({ username, password }) => {
-    // Suppose we actually send a request to the back end here.
-
-    const user = fetch("/users/login", {
-      method: "POST",
-      body: JSON.stringify({ username, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
-
-    if (user) {
-      Cookies.set("auth", JSON.stringify(user), {
-        expires: 1 / 24, // 1 hour
-        path: "/",
+    try {
+      const response = axios.post(`${API_URL}/users/login`, {
+        username,
+        password,
       });
+
+      const user = await response.then((res) => res.data);
+
+      if (user && user?.accessToken && user?.tokenType) {
+        Cookies.set("auth", JSON.stringify(user), {
+          expires: 1 / 24, // 1 hour
+          path: "/",
+        });
+        // Add user to the local storage
+        localStorage.setItem("user", JSON.stringify(user));
+        return {
+          success: true,
+          redirectTo: "/",
+        };
+      }
       return {
-        success: true,
-        redirectTo: "/",
+        success: false,
+        error: {
+          name: "Login Error",
+          message: "Invalid username or password",
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          name: "Login Error",
+          message: "Invalid username or password",
+        },
       };
     }
-    return {
-      success: false,
-      error: {
-        name: "LoginError",
-        message: "Invalid username or password",
-      },
-    };
   },
   register: async ({ username, email, password }) => {
-    // Suppose we actually send a request to the back end here.
-    const user = fetch("/users/register", {
-      method: "POST",
-      body: JSON.stringify({ username, email, password }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => {
-      if (res.ok) {
-        return res.json();
-      }
-    });
+    try {
+      const response = axios.post(`${API_URL}/users/register`, {
+        username,
+        email,
+        password,
+      });
 
-    // If the user is successfully registered, redirect to the login page.
-    if (user !== undefined) {
+      const message = response.then((res) => res.data);
+
+      // If the user is successfully registered, redirect to the login page.
+      if ((await message)?.message === "User registered successfully!") {
+        return {
+          success: true,
+          redirectTo: "/login",
+        };
+      }
       return {
-        success: true,
-        redirectTo: "/login",
+        success: false,
+        error: {
+          name: "Register Error",
+          message: "Invalid username, email, or password",
+        },
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: {
+          name: "Register Error",
+          message: "Invalid username, email, or password",
+        },
       };
     }
-    return {
-      success: false,
-      error: {
-        name: "RegisterError",
-        message: "Invalid username or password",
-      },
-    };
   },
   logout: async () => {
     Cookies.remove("auth", { path: "/" });

@@ -29,6 +29,8 @@ import Typography from "@mui/material/Typography";
 import type { BoxProps } from "@mui/material/Box";
 import type { CardContentProps } from "@mui/material/CardContent";
 import type { FormPropsType } from "../index";
+import { IconButton, InputAdornment } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type LoginProps = LoginPageProps<BoxProps, CardContentProps, FormPropsType>;
 
@@ -74,6 +76,10 @@ export const LoginPage: React.FC<LoginProps> = ({
   const routerType = useRouterType();
   const Link = useLink();
   const { Link: LegacyLink } = useRouterContext();
+
+  const [showPassword, setShowPassword] = React.useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
   const ActiveLink = routerType === "legacy" ? LegacyLink : Link;
 
@@ -196,11 +202,25 @@ export const LoginPage: React.FC<LoginProps> = ({
               label={translate("pages.login.fields.password", "Password")}
               helperText={errors?.password?.message}
               error={!!errors.password}
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="●●●●●●●●"
               autoComplete="current-password"
               sx={{
                 mb: 0,
+              }}
+              InputProps={{
+                // <-- This is where the toggle button is added.
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
             />
             <Box

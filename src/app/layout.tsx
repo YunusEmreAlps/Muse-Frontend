@@ -31,7 +31,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body suppressHydrationWarning={true}>
         <Suspense>
           <RefineKbarProvider>
             <ColorModeContextProvider defaultMode={defaultMode}>
@@ -43,21 +43,21 @@ export default function RootLayout({
                     authProvider={authProvider}
                     resources={[
                       {
-                        name: "blog_posts",
-                        list: "/blog-posts",
-                        create: "/blog-posts/create",
-                        edit: "/blog-posts/edit/:id",
-                        show: "/blog-posts/show/:id",
+                        name: "accounts",
+                        list: "/accounts",
+                        create: "/accounts/create",
+                        edit: "/accounts/:id",
+                        show: "/accounts/show/:id",
                         meta: {
                           canDelete: true,
                         },
                       },
                       {
-                        name: "categories",
-                        list: "/categories",
-                        create: "/categories/create",
-                        edit: "/categories/edit/:id",
-                        show: "/categories/show/:id",
+                        name: "transactions",
+                        list: "/transactions",
+                        create: "/transactions/create",
+                        edit: "/transactions/:id",
+                        show: "/transactions/show/:id",
                         meta: {
                           canDelete: true,
                         },
